@@ -25,7 +25,7 @@ from fullsweeper import fullsweeper
 from matplotlib import pyplot as plt
 
 def plot_waterfall(data, percent_overlap):
-	"""
+    """
     input:
     data - 2d array of spectrum data in which each row represents a subsweep
     column 0: time in seconds
@@ -37,7 +37,7 @@ def plot_waterfall(data, percent_overlap):
                       percent_overlap of > 0.5 is not supported
 
     Creates a waterfall plot of the fullsweeps in data
-	"""
+    """
     fullsweeps = fullsweeper(data, percent_overlap)
     fullsweeps[:,0] += -fullsweeps[0,0]
     
