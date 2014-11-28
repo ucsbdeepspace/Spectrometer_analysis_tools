@@ -50,7 +50,7 @@ def plot_waterfall(data, percent_overlap):
     plt.pcolormesh(freqs, times, intensities)
     plt.gca().invert_yaxis()
     
-    plt.colorbar(label = 'intensity $($volts$^2)$')
+    plt.colorbar(label = 'intensity $($V$^2)$')
     plt.xlabel('frequency $($MHz$)$')
     plt.ylabel('time $($s$)$')
     plt.title('Intensity v.s. Frequency and Time')
@@ -81,7 +81,7 @@ def plot_fullsweeps(data, percent_overlap):
     plt.xlim(freqs[0], freqs[-1])
     plt.legend()
     plt.xlabel('frequency $($MHz$)$')
-    plt.ylabel('intensity $($Volts$^2)$')
+    plt.ylabel('intensity $($V$^2)$')
     plt.title('Intensity v.s. Frequency of Fullsweeps')
     plt.show()
 
