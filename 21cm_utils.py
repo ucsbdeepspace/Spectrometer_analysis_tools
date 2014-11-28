@@ -22,6 +22,7 @@ import numpy as np
 import h5py
 import glob
 from fullsweeper import fullsweeper
+from matplotlib import pyplot as plt
 
 def plot_fullsweeps(data, percent_overlap):
     fullsweeps = fullsweeper(data, percent_overlap)
@@ -31,7 +32,8 @@ def plot_fullsweeps(data, percent_overlap):
     for i in fullsweeps:
         intensities = i[3:]
         plt.plot(freqs, intensities, '-', label = str(math.ceil(i[0])) + ' s')
-        
+    
+    plt.xlim(freqs[0], freqs[-1])
     plt.legend()
     plt.xlabel('frequency $($MHz$)$')
     plt.ylabel('intensity $($Volts$^2)$')
