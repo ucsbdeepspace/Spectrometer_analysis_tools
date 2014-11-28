@@ -21,9 +21,10 @@
 import numpy as np
 import h5py
 import glob
+from fullsweeper import fullsweeper
 
-def concatenate_data(concatenated_file_name):
-    filenames = glob.glob('*.h5')
+def concatenate_data(dir, concatenated_file_name):
+    filenames = glob.glob(dir + '/*.h5')
     files = [h5py.File(i) for i in filenames]
 
     num_rows = np.sum(len(i['Spectrum_Data'][:,0]) for i in files)
@@ -37,4 +38,4 @@ def concatenate_data(concatenated_file_name):
         if (len(i['Spectrum_Data'][:,0]) != 0):
             concatenated_file['Spectrum_Data'][beg:beg+len(i['Spectrum_Data'][:,0]),:] \
             = i['Spectrum_Data']
-            beg += len(i['Spectrum_Data'][:,0])
+            beg += len(i['Spectrum_Data'][:,0]) 
