@@ -27,7 +27,7 @@ def plot_fullsweeps(data, percent_overlap):
     fullsweeps = fullsweeper(data, percent_overlap)
     fullsweeps[:,0] += -fullsweeps[0,0]
     
-    freqs = (fullsweeps[0,1] + np.arange(len(fullsweeps[0,3:])))/1e6
+    freqs = (fullsweeps[0,1] + fullsweeps[0,2]*np.arange(len(fullsweeps[0,3:])))/1e6
     for i in fullsweeps:
         intensities = i[3:]
         plt.plot(freqs, intensities, '-', label = str(math.ceil(i[0])) + ' s')
