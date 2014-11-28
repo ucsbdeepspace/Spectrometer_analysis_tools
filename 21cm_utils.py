@@ -26,8 +26,8 @@ from matplotlib import pyplot as plt
 
 def plot_waterfall(data, percent_overlap):
 	"""
-	input:
-	data - 2d array of spectrum data in which each row represents a subsweep
+    input:
+    data - 2d array of spectrum data in which each row represents a subsweep
     column 0: time in seconds
     column 1: start frequency in Hz
     column 2: frequency step in Hz
