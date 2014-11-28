@@ -114,7 +114,7 @@ def fullsweeper(data, percent_overlap):
 	column 0: time in seconds
 	column 1: start frequency in Hz
 	column 2: frequency step in Hz
-	column 3-end: intensity in volts^2
+	columns 3-end: intensity in volts^2
 	"""
 
     # Step 1: Split the data into fullsweeps

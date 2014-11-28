@@ -26,7 +26,13 @@ from matplotlib import pyplot as plt
 
 def plot_fullsweeps(data, percent_overlap):
     """
-    input: spectrum data hdf file
+    input: 2d array of spectrum data in which each row represents a subsweep
+    column 0: time in seconds
+    column 1: start frequency in Hz
+    column 2: frequency step in Hz
+    column 3: bin size
+    columns 4-end: intensity in dBm
+
     output: line plot of fullsweeps with their center times denoted
             in the legend
     """
@@ -48,8 +54,9 @@ def plot_fullsweeps(data, percent_overlap):
 def concatenate_data(dir, concatenated_file_name):
     """
     input: directory string and name for the output concatenated data file
+
     output: concatenated data file containing data from all hdf files in the
-            specified directory
+            specified directory; file does not contain acquisition info
     """
     filenames = glob.glob(dir + '/*.h5')
     files = [h5py.File(i) for i in filenames]
