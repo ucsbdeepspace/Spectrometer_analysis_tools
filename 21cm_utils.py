@@ -29,7 +29,7 @@ def concatenate_data(dir, concatenated_file_name):
 
     num_rows = np.sum(len(i['Spectrum_Data'][:,0]) for i in files)
     num_cols = len(files[0]['Spectrum_Data'][0,:])
-    concatenated_file = h5py.File(name, 'w')
+    concatenated_file = h5py.File(concatenated_file_name, 'w')
     concatenated_data = concatenated_file.create_dataset('Spectrum_Data', \
                                                          (num_rows, num_cols))
     
