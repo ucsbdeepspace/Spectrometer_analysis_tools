@@ -24,6 +24,38 @@ import glob
 from fullsweeper import fullsweeper
 from matplotlib import pyplot as plt
 
+def plot_waterfall(data, percent_overlap):
+	"""
+	input:
+	data - 2d array of spectrum data in which each row represents a subsweep
+    column 0: time in seconds
+    column 1: start frequency in Hz
+    column 2: frequency step in Hz
+    column 3: bin size
+    columns 4-end: intensity in dBm
+    percent_overlap - fraction indicating the amount by which subsweeps overlap
+                      percent_overlap of > 0.5 is not supported
+
+    Creates a waterfall plot of the fullsweeps in data
+	"""
+    fullsweeps = fullsweeper(data, percent_overlap)
+    fullsweeps[:,0] += -fullsweeps[0,0]
+    
+    times = fullsweeps[:,0]
+    freqs = (fullsweeps[0,1] + fullsweeps[0,2]*np.arange(len(fullsweeps[0,3:])))/1e6
+    intensities = fullsweeps[:,3:]        
+    
+    plt.xlim(freqs[0], freqs[-1])
+    plt.ylim(times[0], times[-1])
+    plt.pcolormesh(freqs, times, intensities)
+    plt.gca().invert_yaxis()
+    
+    plt.colorbar(label = 'intensity $($volts$^2)$')
+    plt.xlabel('frequency $($MHz$)$')
+    plt.ylabel('time $($s$)$')
+    plt.title('Intensity v.s. Frequency and Time')
+    plt.show()
+
 def plot_fullsweeps(data, percent_overlap):
     """
     input:
