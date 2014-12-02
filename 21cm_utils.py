@@ -38,17 +38,14 @@ def test_int_down(inarray):
 
     outstds=[]
     outnpts=[]
-
-    out={}
-    
     for i in range(ncuts):
         d=np.reshape(d,(2**i,2**(ncuts-i)))
         outstds.append(np.std(np.mean(d,axis=1)))
         outnpts.append(2**(ncuts-i))
 
+    out = {}
     out['stdev']=np.array(outstds)
     out['npoints']=np.array(outnpts)
-
     return out
 
 def is_outlier(points, thresh=3.5):
