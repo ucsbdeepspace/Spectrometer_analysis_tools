@@ -24,6 +24,27 @@ import glob
 from fullsweeper import fullsweeper
 from matplotlib import pyplot as plt
 
+def plot_int_down(arr):
+    """
+    input: 
+    arr - an array of values for the integration down test
+
+    creates a plot of the integrated down data
+    """
+    data = test_int_down(arr)
+    
+    r = data['stdev'][-1]/(1/np.sqrt(data['npoints'][-1]))
+    plt.plot(data['npoints'], data['stdev'], '-o', label = 'standard deviation')
+    plt.plot(data['npoints'], r/np.sqrt(data['npoints']), label = '1/sqrt(n)')
+    
+    plt.legend()
+    plt.xlabel('npoints')
+    plt.ylabel('standard deviation')
+    plt.title('Integrated Down Data')
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.show()
+
 def test_int_down(inarray):
     '''
 
