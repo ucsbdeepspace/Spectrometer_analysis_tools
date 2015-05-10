@@ -37,7 +37,13 @@ def _split(data):
 def _volts_squared_from_dbm(data):
     IMPEDANCE = 50
     return np.concatenate((data[:,:4], 
-                          (10**(data[:,4:]/20.0 - 3) * IMPEDANCE)),
+                          (10**(data[:,4:]/10.0 - 3) * IMPEDANCE)),
+                          axis=1)
+
+def _dbm_from_volts_squared(arr):
+    IMPEDANCE = 50
+    return np.concatenate((arr[:4],
+                          (10 * (np.log10(arr[4:] / IMPEDANCE) + 3))),
                           axis=1)
 
 def _stacked(data):
@@ -98,24 +104,24 @@ def _overlapped(data, percent_overlap):
     return output
 
 def fullsweeper(data, percent_overlap):
-	"""
-	input:
-	data - 2d array of spectrum data in which each row represents a subsweep
-	column 0: time in seconds
-	column 1: start frequency in Hz
-	column 2: frequency step in Hz
-	column 3: bin size
-	columns 4-end: intensity in dBm
-	percent_overlap - fraction indicating the amount by which subsweeps overlap
-					  percent_overlap of > 0.5 is not supported
+    """
+    input:
+    data - 2d array of spectrum data in which each row represents a subsweep
+    column 0: time in seconds
+    column 1: start frequency in Hz
+    column 2: frequency step in Hz
+    column 3: bin size
+    columns 4-end: intensity in dBm
+    percent_overlap - fraction indicating the amount by which subsweeps overlap
+      percent_overlap of > 0.5 is not supported
 
-	output:
-	2d array of spectrum data in which each row represents a fullsweep
-	column 0: time in seconds
-	column 1: start frequency in Hz
-	column 2: frequency step in Hz
-	columns 3-end: intensity in volts^2
-	"""
+    output:
+    2d array of spectrum data in which each row represents a fullsweep
+    column 0: time in seconds
+    column 1: start frequency in Hz
+    column 2: frequency step in Hz
+    columns 3-end: intensity in dB
+    """
 
     # Step 1: Split the data into fullsweeps
     fullsweeps = _split(data)
@@ -138,5 +144,8 @@ def fullsweeper(data, percent_overlap):
     mode_length = Counter([len(x) for x in fullsweeps]).most_common(1)[0][0]
     fullsweeps = [x for x in fullsweeps if len(x) == mode_length]
 
-    # Step 7: Stack the remaining output rows into a 2D array and return
+    # Step 7: Convert everything to dB
+    fullsweeps = [_dbm_from_volts_squared(x) for x in fullsweeps]
+    
+    #Step 8: Stack the remaining output rows into a 2D array and return
     return np.vstack(fullsweeps)
